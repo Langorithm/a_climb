@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://b7dv11qhityjf"]
+
+[ext_resource type="Script" uid="uid://bmcdmti330vr8" path="res://player.gd" id="1_80nbo"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mwb40"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mwb40"]
+
+[node name="Node2D" type="Node2D" unique_id=1263993336]
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1260649780]
+position = Vector2(660, 329)
+script = ExtResource("1_80nbo")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1792812585]
+shape = SubResource("CapsuleShape2D_mwb40")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1222234680]
+position = Vector2(300, 1080)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=637828263]
+shape = SubResource("WorldBoundaryShape2D_mwb40")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1876493517]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=735578887]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09389333, 0.0868, 0.14, 1)
+metadata/_edit_lock_ = true
