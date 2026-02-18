@@ -28,6 +28,8 @@ func _physics_process(delta):
 
 	if velocity.y > 0:
 		current_gravity *= FALL_GRAVITY_MULT
+		if sprite.animation != "jump_fall":
+			sprite.play("jump_fall")
 
 	elif velocity.y < 0 and not Input.is_action_pressed("ui_accept"):
 		current_gravity *= LOW_JUMP_MULT
@@ -35,10 +37,8 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += current_gravity * delta
 		coyote_timer -= delta
-		if sprite.animation != "jump_fall":
-			sprite.play("jump_fall")
 	else:
-		if sprite.animation not in ["idle", "run"]:
+		if sprite.animation != "idle" and Input.get_axis("ui_left", "ui_right") == 0:
 			sprite.play("idle")
 		coyote_timer = COYOTE_TIME
 
@@ -60,7 +60,7 @@ func _physics_process(delta):
 		var direction = Input.get_axis("ui_left", "ui_right")
 		if direction != 0:
 			sprite.flip_h = direction < 0
-			if sprite.animation != "run" and is_on_floor():
+			if sprite.animation not in ["run", 'jump_rise'] and is_on_floor():
 				sprite.play("run")
 		if direction:
 			velocity.x = direction * SPEED

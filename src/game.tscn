@@ -3,9 +3,12 @@
 [ext_resource type="Script" uid="uid://2wg2o70x8hc5" path="res://game.gd" id="1_e2o6t"]
 [ext_resource type="FontFile" uid="uid://cr2ri0ggad88i" path="res://monogram.ttf" id="2_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://xi8fylb5l4fs" path="res://Player/player.tscn" id="2_feb5d"]
+[ext_resource type="Texture2D" uid="uid://dj3w7jffbrcks" path="res://Map/background 4/1.png" id="2_vef74"]
 [ext_resource type="PackedScene" uid="uid://dse8p5orbkl3" path="res://Map/platform.tscn" id="3_fc0e3"]
+[ext_resource type="Texture2D" uid="uid://cqiuhtd5ixca3" path="res://Map/background 4/2.png" id="3_hve3p"]
+[ext_resource type="Texture2D" uid="uid://cvfuqonsb70qk" path="res://Map/background 4/3.png" id="4_mfdv2"]
 [ext_resource type="Script" uid="uid://btl8x4mylr2y6" path="res://camera_2d.gd" id="4_ryrav"]
-[ext_resource type="Script" uid="uid://dkyw7t7uy0xy2" path="res://hazard.gd" id="5_7jktm"]
+[ext_resource type="PackedScene" uid="uid://b56rx4e7g14tm" path="res://Map/hazard.tscn" id="6_eow3j"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7jktm"]
 font = ExtResource("2_fc0e3")
@@ -20,11 +23,55 @@ shadow_offset = Vector2(0.5, 3)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_feb5d"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fc0e3"]
-size = Vector2(34, 36)
+[sub_resource type="Gradient" id="Gradient_ryrav"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_eow3j"]
+gradient = SubResource("Gradient_ryrav")
 
 [node name="Node2D" type="Node2D" unique_id=1263993336]
 script = ExtResource("1_e2o6t")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=100351340]
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground" unique_id=1176175685]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09389333, 0.0868, 0.14, 1)
+metadata/_edit_lock_ = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=810212925]
+motion_scale = Vector2(0.01, 0.01)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=1391823418]
+texture_filter = 1
+scale = Vector2(3.3333328, 3.3333333)
+texture = ExtResource("2_vef74")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" unique_id=2023869461]
+motion_scale = Vector2(0.1, 0.1)
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2" unique_id=1802571686]
+modulate = Color(0.73, 0.3285, 0.62293345, 0.45882353)
+texture_filter = 1
+scale = Vector2(3.3333328, 3.3333333)
+texture = ExtResource("3_hve3p")
+centered = false
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground" unique_id=2051297615]
+motion_scale = Vector2(0.12, 0.12)
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=1298708865]
+modulate = Color(0.56, 0.62600005, 1, 0.21568628)
+texture_filter = 1
+scale = Vector2(3.3333328, 3.3333333)
+texture = ExtResource("4_mfdv2")
+centered = false
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1829271693]
 
@@ -56,8 +103,10 @@ label_settings = SubResource("LabelSettings_7jktm")
 
 [node name="BG" type="CanvasLayer" parent="." unique_id=1876493517]
 layer = -1
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="BG" unique_id=735578887]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -65,18 +114,6 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.09389333, 0.0868, 0.14, 1)
 metadata/_edit_lock_ = true
-
-[node name="Player" parent="." unique_id=1130158691 groups=["Player"] instance=ExtResource("2_feb5d")]
-position = Vector2(328, 971)
-
-[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1464915663]
-position = Vector2(-1, -191)
-limit_left = 0
-limit_right = 1920
-limit_bottom = 1100
-position_smoothing_enabled = true
-drag_vertical_enabled = true
-script = ExtResource("4_ryrav")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1222234680]
 position = Vector2(300, 1080)
@@ -86,11 +123,46 @@ shape = SubResource("WorldBoundaryShape2D_mwb40")
 
 [node name="WinArea" type="Area2D" parent="." unique_id=2057798308]
 unique_name_in_owner = true
-position = Vector2(1028, -2965)
+position = Vector2(1028, -3330)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WinArea" unique_id=1206771125]
 shape = SubResource("CircleShape2D_feb5d")
 debug_color = Color(0.6292076, 0.5305362, 0, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="WinArea" unique_id=2011005331]
+modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_eow3j")
+
+[node name="Sprite2D2" type="Sprite2D" parent="WinArea" unique_id=684232192]
+modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
+rotation = 0.26344597
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_eow3j")
+
+[node name="Sprite2D3" type="Sprite2D" parent="WinArea" unique_id=1691083331]
+modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
+rotation = 0.56885856
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_eow3j")
+
+[node name="Sprite2D4" type="Sprite2D" parent="WinArea" unique_id=1951199941]
+modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
+rotation = 0.8838998
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_eow3j")
+
+[node name="Sprite2D5" type="Sprite2D" parent="WinArea" unique_id=1160001771]
+modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
+rotation = 1.0843444
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_eow3j")
+
+[node name="Sprite2D6" type="Sprite2D" parent="WinArea" unique_id=1983380415]
+modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
+rotation = 1.3993856
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_eow3j")
 
 [node name="Platforms" type="Node2D" parent="." unique_id=1477035218]
 
@@ -99,9 +171,6 @@ position = Vector2(1038, 962)
 
 [node name="Platform2" parent="Platforms" unique_id=765806862 instance=ExtResource("3_fc0e3")]
 position = Vector2(745, 868)
-
-[node name="Line2D" type="Line2D" parent="Platforms/Platform2" unique_id=1111548683]
-points = PackedVector2Array(6, -30, -112, 121, -265, 132)
 
 [node name="Platform3" parent="Platforms" unique_id=1456706188 instance=ExtResource("3_fc0e3")]
 position = Vector2(929, 679)
@@ -147,9 +216,99 @@ position = Vector2(435, -469)
 rotation = -0.13106509
 scale = Vector2(0.99999994, 0.99999994)
 
+[node name="Platform24" parent="Platforms" unique_id=2133159004 instance=ExtResource("3_fc0e3")]
+position = Vector2(788, -983.00006)
+rotation = -0.13106509
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform24" unique_id=1632804176]
+points = PackedVector2Array(-372.83356, -132.8653, -105.7984, -0.83392334, 237.73438, 25.286438)
+
 [node name="Platform16" parent="Platforms" unique_id=1894046886 instance=ExtResource("3_fc0e3")]
 position = Vector2(585, -486)
 rotation = -0.46575332
+
+[node name="Platform27" parent="Platforms" unique_id=1219586807 instance=ExtResource("3_fc0e3")]
+position = Vector2(312, -1757)
+
+[node name="Platform34" parent="Platforms" unique_id=547348521 instance=ExtResource("3_fc0e3")]
+position = Vector2(1768, -2243)
+
+[node name="Platform35" parent="Platforms" unique_id=558936056 instance=ExtResource("3_fc0e3")]
+position = Vector2(1627, -2415)
+
+[node name="Platform36" parent="Platforms" unique_id=332531711 instance=ExtResource("3_fc0e3")]
+position = Vector2(1715, -2631)
+rotation = -0.13174872
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform36" unique_id=51003386]
+points = PackedVector2Array(4.279785, 310.25085, -135.90771, 28.39209, 164.13062, -20.617188, 130.41089, -207.66821)
+
+[node name="Platform28" parent="Platforms" unique_id=31496241 instance=ExtResource("3_fc0e3")]
+position = Vector2(558, -1529.9999)
+rotation = -0.13106509
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Platform29" parent="Platforms" unique_id=543605515 instance=ExtResource("3_fc0e3")]
+position = Vector2(640, -1788)
+rotation = -0.46575332
+
+[node name="Platform30" parent="Platforms" unique_id=1075937829 instance=ExtResource("3_fc0e3")]
+position = Vector2(1050, -1868)
+rotation = 0.43233925
+
+[node name="Platform31" parent="Platforms" unique_id=656194923 instance=ExtResource("3_fc0e3")]
+position = Vector2(1228, -1882.0001)
+rotation = 0.30127418
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform31" unique_id=1351647698]
+points = PackedVector2Array(-528.46967, -157.2666, 24.28949, -43.151123)
+
+[node name="Platform32" parent="Platforms" unique_id=1225325366 instance=ExtResource("3_fc0e3")]
+position = Vector2(1464, -1948)
+rotation = -0.4374335
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform32" unique_id=712949968]
+points = PackedVector2Array(-301.3037, -639.8878, 413.20825, -210.8075)
+
+[node name="Platform41" parent="Platforms" unique_id=1084923165 instance=ExtResource("3_fc0e3")]
+position = Vector2(1276, -2334)
+rotation = -0.21053173
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform41" unique_id=590450859]
+position = Vector2(-34.552345, -4.015239)
+points = PackedVector2Array(-182.29016, -42.19397, 286.06494, 58.709656)
+
+[node name="Platform37" parent="Platforms" unique_id=2105645972 instance=ExtResource("3_fc0e3")]
+position = Vector2(1213, -2159)
+rotation = -0.17290434
+
+[node name="Platform38" parent="Platforms" unique_id=1994816232 instance=ExtResource("3_fc0e3")]
+position = Vector2(1012.9999, -2218)
+rotation = 0.1346606
+
+[node name="Platform40" parent="Platforms" unique_id=746929056 instance=ExtResource("3_fc0e3")]
+position = Vector2(868.00006, -2354.0002)
+rotation = 0.3499436
+
+[node name="Platform39" parent="Platforms" unique_id=254866432 instance=ExtResource("3_fc0e3")]
+position = Vector2(707.00006, -2343.0002)
+rotation = 0.12132098
+
+[node name="Platform33" parent="Platforms" unique_id=1184570796 instance=ExtResource("3_fc0e3")]
+position = Vector2(1371, -2585)
+rotation = -0.61067426
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform33" unique_id=47397078]
+points = PackedVector2Array(-301.3037, -639.8878, 413.20825, -210.8075)
+
+[node name="Platform25" parent="Platforms" unique_id=1367054536 instance=ExtResource("3_fc0e3")]
+position = Vector2(527, -920)
+rotation = -0.04235336
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform25" unique_id=534632631]
+points = PackedVector2Array(-206.12872, 22.29242, 177.75574, 9.534912)
 
 [node name="Platform21" parent="Platforms" unique_id=516650867 instance=ExtResource("3_fc0e3")]
 position = Vector2(740, -1429)
@@ -166,6 +325,13 @@ rotation = -0.6594421
 [node name="Platform23" parent="Platforms" unique_id=1750583145 instance=ExtResource("3_fc0e3")]
 position = Vector2(1162, -914)
 rotation = -0.017931461
+
+[node name="Platform26" parent="Platforms" unique_id=941764070 instance=ExtResource("3_fc0e3")]
+position = Vector2(1644, -994)
+rotation = -0.017931461
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform26" unique_id=426057817]
+points = PackedVector2Array(-130.08069, 393.7309, -214.25159, 235.19623)
 
 [node name="Platform18" parent="Platforms" unique_id=1498509075 instance=ExtResource("3_fc0e3")]
 position = Vector2(1048, -510.00006)
@@ -186,28 +352,37 @@ rotation = -0.10764009
 rotation = -0.0763785
 points = PackedVector2Array(-423.5868, -68.66803, -157.73792, -267.37753, -331.97778, -610.04584)
 
-[node name="Hazard" type="Area2D" parent="." unique_id=77577257]
+[node name="Player" parent="." unique_id=1130158691 groups=["Player"] instance=ExtResource("2_feb5d")]
+position = Vector2(717, 601)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1464915663]
+position = Vector2(-1, -191)
+limit_left = 0
+limit_right = 1920
+limit_bottom = 1100
+position_smoothing_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("4_ryrav")
+
+[node name="Hazard" parent="." unique_id=578578439 instance=ExtResource("6_eow3j")]
 position = Vector2(1370, 354)
-script = ExtResource("5_7jktm")
-knockback_strength = 150.0
-metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard" unique_id=574819151]
-rotation = 0.7647906
-scale = Vector2(0.99999994, 0.99999994)
-shape = SubResource("RectangleShape2D_fc0e3")
-debug_color = Color(0.99, 0, 0.34649992, 0.6156863)
+[node name="Hazard8" parent="." unique_id=882163600 instance=ExtResource("6_eow3j")]
+position = Vector2(1123, 73)
 
-[node name="Hazard2" type="Area2D" parent="." unique_id=362753061]
-position = Vector2(1126, 72)
-script = ExtResource("5_7jktm")
-knockback_strength = 150.0
-metadata/_edit_group_ = true
+[node name="Hazard9" parent="." unique_id=434490335 instance=ExtResource("6_eow3j")]
+position = Vector2(935, -438)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard2" unique_id=16391938]
-rotation = 0.7647906
-scale = Vector2(0.99999994, 0.99999994)
-shape = SubResource("RectangleShape2D_fc0e3")
-debug_color = Color(0.99, 0, 0.34649992, 0.6156863)
+[node name="Hazard10" parent="." unique_id=1990332598 instance=ExtResource("6_eow3j")]
+position = Vector2(1121, -2387)
+
+[node name="Hazard11" parent="." unique_id=1878095939 instance=ExtResource("6_eow3j")]
+position = Vector2(1484, -2364)
+
+[node name="Hazard12" parent="." unique_id=226726649 instance=ExtResource("6_eow3j")]
+position = Vector2(1846, -2778)
+
+[node name="Hazard13" parent="." unique_id=1649240312 instance=ExtResource("6_eow3j")]
+position = Vector2(480, -1846)
 
 [connection signal="player_damaged" from="Player" to="Player/Camera2D" method="_on_player_player_damaged"]

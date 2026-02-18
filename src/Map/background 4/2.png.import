@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5q8jh3h4x5m6"
-path="res://.godot/imported/male_hero_template-combo_1_end.png-00c8c565ed50b45366ed76ef6418e2b0.ctex"
+uid="uid://cqiuhtd5ixca3"
+path="res://.godot/imported/2.png-de6371e155547c9b3a2c304522cf02b5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/animations/male_hero_template-combo_1_end.png"
-dest_files=["res://.godot/imported/male_hero_template-combo_1_end.png-00c8c565ed50b45366ed76ef6418e2b0.ctex"]
+source_file="res://Map/background 4/2.png"
+dest_files=["res://.godot/imported/2.png-de6371e155547c9b3a2c304522cf02b5.ctex"]
 
 [params]
 

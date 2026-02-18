@@ -8,11 +8,72 @@ rough = true
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_80nbo"]
 height = 136.0
 
+[sub_resource type="Gradient" id="Gradient_fy6gi"]
+offsets = PackedFloat32Array(0.34252873, 0.4759036, 0.53614455, 0.6413793, 0.686747)
+colors = PackedColorArray(0.36, 1, 0.76533324, 0.92941177, 1, 1, 1, 0, 1, 1, 1, 0, 0.72, 0.8226667, 1, 0.5019608, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_saifk"]
+gradient = SubResource("Gradient_fy6gi")
+width = 400
+height = 400
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_c8ntw"]
+offsets = PackedFloat32Array(0.14022988, 0.55632186, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ut3cj"]
+gradient = SubResource("Gradient_c8ntw")
+width = 5
+height = 5
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_fy6gi"]
+_data = [Vector2(0, 0.40056318), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_saifk"]
+offsets = PackedFloat32Array(0, 0.13348946, 0.23185012, 0.71662766, 1)
+colors = PackedColorArray(0.6993333, 0.56, 1, 0, 0.6993333, 0.56, 1, 0.5921569, 0.56, 0.9853333, 1, 1, 0.20010002, 0.62468004, 0.69, 1, 0.52, 0, 0.12133321, 0)
+
 [node name="Platform" type="AnimatableBody2D" unique_id=2133159004]
 physics_material_override = SubResource("PhysicsMaterial_fy6gi")
 script = ExtResource("1_fy6gi")
-metadata/_edit_group_ = true
+metadata/_edit_vertical_guides_ = [-72.0, 74.0]
+metadata/_edit_horizontal_guides_ = [-13.0, 14.0]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=939388854]
+visible = false
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_80nbo")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1189612280]
+modulate = Color(0.891, 0.84150004, 0.99, 0.827451)
+position = Vector2(0, -5)
+scale = Vector2(0.39499998, 0.1)
+texture = SubResource("GradientTexture2D_saifk")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=230534688]
+position = Vector2(0, -5)
+scale = Vector2(3.1600006, 1)
+amount = 240
+texture = SubResource("GradientTexture2D_ut3cj")
+lifetime = 0.09999999999999999
+speed_scale = 0.1
+emission_shape = 2
+emission_sphere_radius = 22.54
+gravity = Vector2(0, 0)
+angular_velocity_min = -720.0
+angular_velocity_max = 614.7
+radial_accel_min = -83.8
+radial_accel_max = 62.85
+tangential_accel_min = 4.62
+tangential_accel_max = 100.0
+angle_min = -484.8
+angle_max = 278.0
+scale_amount_min = 2.0
+scale_amount_max = 8.0
+scale_amount_curve = SubResource("Curve_fy6gi")
+color_ramp = SubResource("Gradient_saifk")
