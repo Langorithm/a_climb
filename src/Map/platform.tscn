@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dse8p5orbkl3"]
+
+[ext_resource type="Script" uid="uid://spjw8rc7fmsi" path="res://Map/platform.gd" id="1_fy6gi"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fy6gi"]
+rough = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_80nbo"]
+height = 136.0
+
+[node name="Platform" type="AnimatableBody2D" unique_id=2133159004]
+physics_material_override = SubResource("PhysicsMaterial_fy6gi")
+script = ExtResource("1_fy6gi")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=939388854]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_80nbo")

@@ -1,31 +1,63 @@
 [gd_scene format=3 uid="uid://b7dv11qhityjf"]
 
-[ext_resource type="Script" uid="uid://bmcdmti330vr8" path="res://player.gd" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://2wg2o70x8hc5" path="res://game.gd" id="1_e2o6t"]
+[ext_resource type="FontFile" uid="uid://cr2ri0ggad88i" path="res://monogram.ttf" id="2_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://xi8fylb5l4fs" path="res://Player/player.tscn" id="2_feb5d"]
+[ext_resource type="PackedScene" uid="uid://dse8p5orbkl3" path="res://Map/platform.tscn" id="3_fc0e3"]
+[ext_resource type="Script" uid="uid://btl8x4mylr2y6" path="res://camera_2d.gd" id="4_ryrav"]
+[ext_resource type="Script" uid="uid://dkyw7t7uy0xy2" path="res://hazard.gd" id="5_7jktm"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mwb40"]
+[sub_resource type="LabelSettings" id="LabelSettings_7jktm"]
+font = ExtResource("2_fc0e3")
+font_size = 180
+font_color = Color(1, 0.92700005, 0.26999998, 0.8784314)
+outline_color = Color(0, 0, 0, 0.3137255)
+shadow_size = 40
+shadow_color = Color(0, 0, 0, 0.3647059)
+shadow_offset = Vector2(0.5, 3)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mwb40"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_feb5d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fc0e3"]
+size = Vector2(34, 36)
+
 [node name="Node2D" type="Node2D" unique_id=1263993336]
+script = ExtResource("1_e2o6t")
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1260649780]
-position = Vector2(660, 329)
-script = ExtResource("1_80nbo")
-metadata/_edit_group_ = true
+[node name="UI" type="CanvasLayer" parent="." unique_id=1829271693]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1792812585]
-shape = SubResource("CapsuleShape2D_mwb40")
+[node name="BlackScreen" type="ColorRect" parent="UI" unique_id=1300955757]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1222234680]
-position = Vector2(300, 1080)
+[node name="WinLabel" type="Label" parent="UI" unique_id=498690681]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "You made the climb!"
+label_settings = SubResource("LabelSettings_7jktm")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=637828263]
-shape = SubResource("WorldBoundaryShape2D_mwb40")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1876493517]
+[node name="BG" type="CanvasLayer" parent="." unique_id=1876493517]
 layer = -1
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=735578887]
+[node name="ColorRect" type="ColorRect" parent="BG" unique_id=735578887]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -33,3 +65,149 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.09389333, 0.0868, 0.14, 1)
 metadata/_edit_lock_ = true
+
+[node name="Player" parent="." unique_id=1130158691 groups=["Player"] instance=ExtResource("2_feb5d")]
+position = Vector2(328, 971)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1464915663]
+position = Vector2(-1, -191)
+limit_left = 0
+limit_right = 1920
+limit_bottom = 1100
+position_smoothing_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("4_ryrav")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1222234680]
+position = Vector2(300, 1080)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=637828263]
+shape = SubResource("WorldBoundaryShape2D_mwb40")
+
+[node name="WinArea" type="Area2D" parent="." unique_id=2057798308]
+unique_name_in_owner = true
+position = Vector2(1028, -2965)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WinArea" unique_id=1206771125]
+shape = SubResource("CircleShape2D_feb5d")
+debug_color = Color(0.6292076, 0.5305362, 0, 0.41960785)
+
+[node name="Platforms" type="Node2D" parent="." unique_id=1477035218]
+
+[node name="Platform" parent="Platforms" unique_id=448993756 instance=ExtResource("3_fc0e3")]
+position = Vector2(1038, 962)
+
+[node name="Platform2" parent="Platforms" unique_id=765806862 instance=ExtResource("3_fc0e3")]
+position = Vector2(745, 868)
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform2" unique_id=1111548683]
+points = PackedVector2Array(6, -30, -112, 121, -265, 132)
+
+[node name="Platform3" parent="Platforms" unique_id=1456706188 instance=ExtResource("3_fc0e3")]
+position = Vector2(929, 679)
+
+[node name="Platform4" parent="Platforms" unique_id=1865341397 instance=ExtResource("3_fc0e3")]
+position = Vector2(1339, 618)
+
+[node name="Platform5" parent="Platforms" unique_id=84203434 instance=ExtResource("3_fc0e3")]
+position = Vector2(1498, 445)
+
+[node name="Platform6" parent="Platforms" unique_id=840454582 instance=ExtResource("3_fc0e3")]
+position = Vector2(1603, 244)
+
+[node name="Platform7" parent="Platforms" unique_id=2059720882 instance=ExtResource("3_fc0e3")]
+position = Vector2(1329, 162)
+
+[node name="Platform8" parent="Platforms" unique_id=184320202 instance=ExtResource("3_fc0e3")]
+position = Vector2(887, 162)
+
+[node name="Platform9" parent="Platforms" unique_id=1174960019 instance=ExtResource("3_fc0e3")]
+position = Vector2(789, -243)
+
+[node name="Platform10" parent="Platforms" unique_id=1585424868 instance=ExtResource("3_fc0e3")]
+position = Vector2(625, -42)
+
+[node name="Platform11" parent="Platforms" unique_id=16161762 instance=ExtResource("3_fc0e3")]
+position = Vector2(533, -280)
+
+[node name="Platform12" parent="Platforms" unique_id=1070284281 instance=ExtResource("3_fc0e3")]
+position = Vector2(340, -349)
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform12" unique_id=1457123200]
+points = PackedVector2Array(-119, 218, 86, 77, 130, -2)
+
+[node name="Platform13" parent="Platforms" unique_id=166752091 instance=ExtResource("3_fc0e3")]
+position = Vector2(159, -383)
+
+[node name="Platform14" parent="Platforms" unique_id=71892277 instance=ExtResource("3_fc0e3")]
+position = Vector2(257, -455)
+
+[node name="Platform15" parent="Platforms" unique_id=683531053 instance=ExtResource("3_fc0e3")]
+position = Vector2(435, -469)
+rotation = -0.13106509
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Platform16" parent="Platforms" unique_id=1894046886 instance=ExtResource("3_fc0e3")]
+position = Vector2(585, -486)
+rotation = -0.46575332
+
+[node name="Platform21" parent="Platforms" unique_id=516650867 instance=ExtResource("3_fc0e3")]
+position = Vector2(740, -1429)
+rotation = 1.0701965
+
+[node name="Platform22" parent="Platforms" unique_id=710044293 instance=ExtResource("3_fc0e3")]
+position = Vector2(1104, -1525)
+rotation = -0.24299335
+
+[node name="Platform17" parent="Platforms" unique_id=1872328825 instance=ExtResource("3_fc0e3")]
+position = Vector2(756.00006, -530)
+rotation = -0.6594421
+
+[node name="Platform23" parent="Platforms" unique_id=1750583145 instance=ExtResource("3_fc0e3")]
+position = Vector2(1162, -914)
+rotation = -0.017931461
+
+[node name="Platform18" parent="Platforms" unique_id=1498509075 instance=ExtResource("3_fc0e3")]
+position = Vector2(1048, -510.00006)
+rotation = -0.3435371
+
+[node name="Platform20" parent="Platforms" unique_id=383102997 instance=ExtResource("3_fc0e3")]
+position = Vector2(1016, -1123)
+rotation = 0.08564004
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform20" unique_id=150914314]
+points = PackedVector2Array(11.835754, -49.19275, 131.32922, 80.06006, -109.53668, 33.492065, -230.88501, -339.49536)
+
+[node name="Platform19" parent="Platforms" unique_id=2050194939 instance=ExtResource("3_fc0e3")]
+position = Vector2(1648, -525)
+rotation = -0.10764009
+
+[node name="Line2D" type="Line2D" parent="Platforms/Platform19" unique_id=573996020]
+rotation = -0.0763785
+points = PackedVector2Array(-423.5868, -68.66803, -157.73792, -267.37753, -331.97778, -610.04584)
+
+[node name="Hazard" type="Area2D" parent="." unique_id=77577257]
+position = Vector2(1370, 354)
+script = ExtResource("5_7jktm")
+knockback_strength = 150.0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard" unique_id=574819151]
+rotation = 0.7647906
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_fc0e3")
+debug_color = Color(0.99, 0, 0.34649992, 0.6156863)
+
+[node name="Hazard2" type="Area2D" parent="." unique_id=362753061]
+position = Vector2(1126, 72)
+script = ExtResource("5_7jktm")
+knockback_strength = 150.0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard2" unique_id=16391938]
+rotation = 0.7647906
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_fc0e3")
+debug_color = Color(0.99, 0, 0.34649992, 0.6156863)
+
+[connection signal="player_damaged" from="Player" to="Player/Camera2D" method="_on_player_player_damaged"]
