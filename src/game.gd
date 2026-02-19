@@ -3,6 +3,7 @@ extends Node2D
 @onready var win_area: Area2D = %WinArea
 @onready var win_label: Label = %WinLabel
 @onready var black_screen: ColorRect = %BlackScreen
+@onready var win_sound: AudioStreamPlayer = %WinSound
 
 
 func _ready() -> void:
@@ -16,6 +17,7 @@ func _input(event: InputEvent) -> void:
 
 func _on_winarea_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
+		win_sound.play()
 		var t = create_tween().set_trans(Tween.TRANS_CUBIC).set_ignore_time_scale(true)
 		t.tween_property(Engine, "time_scale", 0.1, .5)
 

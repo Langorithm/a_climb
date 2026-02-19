@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b56rx4e7g14tm"]
 
 [ext_resource type="Script" uid="uid://dkyw7t7uy0xy2" path="res://hazard.gd" id="1_ssg1j"]
+[ext_resource type="AudioStream" uid="uid://bchbug1jqj02f" path="res://Sounds/hit.wav" id="2_812wh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fc0e3"]
 size = Vector2(35, 35)
@@ -72,3 +73,8 @@ texture = SubResource("GradientTexture2D_812wh")
 libraries/ = SubResource("AnimationLibrary_gu5le")
 autoplay = &"new_animation"
 speed_scale = 0.5
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="." unique_id=1685842531]
+unique_name_in_owner = true
+stream = ExtResource("2_812wh")
+panning_strength = 1.4

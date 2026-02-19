@@ -18,6 +18,7 @@ var _knockback := Vector2.ZERO
 var _stun_timer := 0.0
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var jump_sound: AudioStreamPlayer = %JumpSound
 
 
 func _physics_process(delta):
@@ -42,9 +43,10 @@ func _physics_process(delta):
 			sprite.play("idle")
 		coyote_timer = COYOTE_TIME
 
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		jump_buffer_timer = JUMP_BUFFER
 		sprite.play("jump_rise")
+		jump_sound.play()
 
 	jump_buffer_timer -= delta
 
@@ -85,4 +87,4 @@ func apply_knockback(hazard_position: Vector2, strength: float):
 	_knockback.x = dir * strength
 
 	# Apply a small vertical 'pop' so they leave the ground
-	velocity.y = -strength
+	velocity.y = -700

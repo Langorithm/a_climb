@@ -4,9 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c5p3m578ykg7d" path="res://Player/animations/male_hero_template-idle.png" id="2_4ntmi"]
 [ext_resource type="Texture2D" uid="uid://dg6c568qm7gam" path="res://Player/animations/male_hero_template-jump.png" id="3_btcbx"]
 [ext_resource type="Texture2D" uid="uid://ckqyvadv8tq5h" path="res://Player/animations/male_hero_template-run.png" id="4_gwnis"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mwb40"]
-height = 46.0
+[ext_resource type="AudioStream" uid="uid://ccwppqbyiqy45" path="res://Sounds/jump.wav" id="5_k53q1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_btcbx"]
 atlas = ExtResource("2_4ntmi")
@@ -213,23 +211,34 @@ animations = [{
 "speed": 18.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mwb40"]
+height = 46.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k53q1"]
+random_pitch = 1.1553527
+streams_count = 1
+stream_0/stream = ExtResource("5_k53q1")
+
 [node name="Player" type="CharacterBody2D" unique_id=1130158691]
 platform_on_leave = 2
 script = ExtResource("1_4flbx")
 metadata/_edit_group_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1041929069]
-visible = false
-position = Vector2(0, -7)
-rotation = 3.1415927
-shape = SubResource("CapsuleShape2D_mwb40")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1449315366]
 unique_name_in_owner = true
 self_modulate = Color(7.9112988, 7.9112988, 7.9112988, 1)
 texture_filter = 1
 position = Vector2(0, -9)
-scale = Vector2(1.59375, 1.59375)
+scale = Vector2(1.9843751, 1.9843751)
 sprite_frames = SubResource("SpriteFrames_p5o4e")
 animation = &"jump_fall"
 autoplay = "run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1041929069]
+position = Vector2(0, -7)
+rotation = -3.1415925
+shape = SubResource("CapsuleShape2D_mwb40")
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="." unique_id=1854091268]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_k53q1")

@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cvfuqonsb70qk" path="res://Map/background 4/3.png" id="4_mfdv2"]
 [ext_resource type="Script" uid="uid://btl8x4mylr2y6" path="res://camera_2d.gd" id="4_ryrav"]
 [ext_resource type="PackedScene" uid="uid://b56rx4e7g14tm" path="res://Map/hazard.tscn" id="6_eow3j"]
+[ext_resource type="AudioStream" uid="uid://c31lmqod6rfew" path="res://Sounds/win.wav" id="6_hve3p"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7jktm"]
 font = ExtResource("2_fc0e3")
@@ -24,8 +25,6 @@ shadow_offset = Vector2(0.5, 3)
 [sub_resource type="CircleShape2D" id="CircleShape2D_feb5d"]
 
 [sub_resource type="Gradient" id="Gradient_ryrav"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_eow3j"]
 gradient = SubResource("Gradient_ryrav")
@@ -33,45 +32,62 @@ gradient = SubResource("Gradient_ryrav")
 [node name="Node2D" type="Node2D" unique_id=1263993336]
 script = ExtResource("1_e2o6t")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=100351340]
+[node name="BG" type="CanvasLayer" parent="." unique_id=298791822]
+layer = -101
 
-[node name="ColorRect" type="ColorRect" parent="ParallaxBackground" unique_id=1176175685]
+[node name="TextureRect" type="TextureRect" parent="BG" unique_id=38575222]
+texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.09389333, 0.0868, 0.14, 1)
-metadata/_edit_lock_ = true
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=810212925]
-motion_scale = Vector2(0.01, 0.01)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=1391823418]
-texture_filter = 1
-scale = Vector2(3.3333328, 3.3333333)
 texture = ExtResource("2_vef74")
-centered = false
+expand_mode = 5
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" unique_id=2023869461]
-motion_scale = Vector2(0.1, 0.1)
+[node name="ParallaxBackground" type="ParallaxBackground" parent="BG" unique_id=1967983571]
 
-[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2" unique_id=1802571686]
-modulate = Color(0.73, 0.3285, 0.62293345, 0.45882353)
+[node name="4" type="ParallaxLayer" parent="BG/ParallaxBackground" unique_id=662242262]
 texture_filter = 1
-scale = Vector2(3.3333328, 3.3333333)
+position = Vector2(-35, -341)
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="bg" type="Sprite2D" parent="BG/ParallaxBackground/4" unique_id=874948581]
+modulate = Color(1, 1, 1, 0.039215688)
+position = Vector2(1178, 1009)
+scale = Vector2(5.8593354, 5.2716055)
 texture = ExtResource("3_hve3p")
-centered = false
 
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground" unique_id=2051297615]
-motion_scale = Vector2(0.12, 0.12)
-
-[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=1298708865]
-modulate = Color(0.56, 0.62600005, 1, 0.21568628)
+[node name="1" type="ParallaxLayer" parent="BG/ParallaxBackground" unique_id=468733791]
 texture_filter = 1
-scale = Vector2(3.3333328, 3.3333333)
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="bg" type="Sprite2D" parent="BG/ParallaxBackground/1" unique_id=1776120047]
+modulate = Color(1, 1, 1, 0.09019608)
+position = Vector2(805, 631)
+scale = Vector2(4.024691, 4.024691)
+texture = ExtResource("3_hve3p")
+
+[node name="2" type="ParallaxLayer" parent="BG/ParallaxBackground" unique_id=1607455077]
+texture_filter = 1
+motion_scale = Vector2(0.3, 0.3)
+
+[node name="bg" type="Sprite2D" parent="BG/ParallaxBackground/2" unique_id=1698755190]
+modulate = Color(1, 1, 1, 0.09019608)
+position = Vector2(801, 923)
+scale = Vector2(4.024691, 4.024691)
+texture = ExtResource("3_hve3p")
+flip_h = true
+
+[node name="3" type="ParallaxLayer" parent="BG/ParallaxBackground" unique_id=1988008381]
+texture_filter = 1
+motion_scale = Vector2(0.5, 0.5)
+
+[node name="bg" type="Sprite2D" parent="BG/ParallaxBackground/3" unique_id=851602113]
+modulate = Color(1, 1, 1, 0.09019608)
+position = Vector2(888, 755)
+scale = Vector2(3.8580241, 3.8580248)
 texture = ExtResource("4_mfdv2")
-centered = false
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1829271693]
 
@@ -100,20 +116,6 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "You made the climb!"
 label_settings = SubResource("LabelSettings_7jktm")
-
-[node name="BG" type="CanvasLayer" parent="." unique_id=1876493517]
-layer = -1
-visible = false
-
-[node name="ColorRect" type="ColorRect" parent="BG" unique_id=735578887]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.09389333, 0.0868, 0.14, 1)
-metadata/_edit_lock_ = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1222234680]
 position = Vector2(300, 1080)
@@ -164,6 +166,10 @@ rotation = 1.3993856
 scale = Vector2(0.25, 0.25)
 texture = SubResource("GradientTexture2D_eow3j")
 
+[node name="WinSound" type="AudioStreamPlayer" parent="WinArea" unique_id=897318905]
+unique_name_in_owner = true
+stream = ExtResource("6_hve3p")
+
 [node name="Platforms" type="Node2D" parent="." unique_id=1477035218]
 
 [node name="Platform" parent="Platforms" unique_id=448993756 instance=ExtResource("3_fc0e3")]
@@ -188,13 +194,13 @@ position = Vector2(1603, 244)
 position = Vector2(1329, 162)
 
 [node name="Platform8" parent="Platforms" unique_id=184320202 instance=ExtResource("3_fc0e3")]
-position = Vector2(887, 162)
+position = Vector2(1006, 256)
 
 [node name="Platform9" parent="Platforms" unique_id=1174960019 instance=ExtResource("3_fc0e3")]
 position = Vector2(789, -243)
 
 [node name="Platform10" parent="Platforms" unique_id=1585424868 instance=ExtResource("3_fc0e3")]
-position = Vector2(625, -42)
+position = Vector2(726, 47)
 
 [node name="Platform11" parent="Platforms" unique_id=16161762 instance=ExtResource("3_fc0e3")]
 position = Vector2(533, -280)
@@ -203,7 +209,7 @@ position = Vector2(533, -280)
 position = Vector2(340, -349)
 
 [node name="Line2D" type="Line2D" parent="Platforms/Platform12" unique_id=1457123200]
-points = PackedVector2Array(-119, 218, 86, 77, 130, -2)
+points = PackedVector2Array(57, 261, 86, 77, 130, -2)
 
 [node name="Platform13" parent="Platforms" unique_id=166752091 instance=ExtResource("3_fc0e3")]
 position = Vector2(159, -383)
@@ -353,7 +359,7 @@ rotation = -0.0763785
 points = PackedVector2Array(-423.5868, -68.66803, -157.73792, -267.37753, -331.97778, -610.04584)
 
 [node name="Player" parent="." unique_id=1130158691 groups=["Player"] instance=ExtResource("2_feb5d")]
-position = Vector2(717, 601)
+position = Vector2(1708, -2725)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1464915663]
 position = Vector2(-1, -191)
@@ -367,11 +373,17 @@ script = ExtResource("4_ryrav")
 [node name="Hazard" parent="." unique_id=578578439 instance=ExtResource("6_eow3j")]
 position = Vector2(1370, 354)
 
+[node name="Hazard2" parent="." unique_id=768037134 instance=ExtResource("6_eow3j")]
+position = Vector2(598, 1034)
+
 [node name="Hazard8" parent="." unique_id=882163600 instance=ExtResource("6_eow3j")]
 position = Vector2(1123, 73)
 
 [node name="Hazard9" parent="." unique_id=434490335 instance=ExtResource("6_eow3j")]
 position = Vector2(935, -438)
+
+[node name="Hazard15" parent="." unique_id=198636500 instance=ExtResource("6_eow3j")]
+position = Vector2(562, -131)
 
 [node name="Hazard10" parent="." unique_id=1990332598 instance=ExtResource("6_eow3j")]
 position = Vector2(1121, -2387)
@@ -383,6 +395,6 @@ position = Vector2(1484, -2364)
 position = Vector2(1846, -2778)
 
 [node name="Hazard13" parent="." unique_id=1649240312 instance=ExtResource("6_eow3j")]
-position = Vector2(480, -1846)
+position = Vector2(738, -1913)
 
 [connection signal="player_damaged" from="Player" to="Player/Camera2D" method="_on_player_player_damaged"]
