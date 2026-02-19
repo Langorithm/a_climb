@@ -18,17 +18,11 @@
             width: 100vw;
             overflow: hidden;
             font-family: 'Courier New', Courier, monospace;
-            /* The "Secret Sauce" for Pixel Art: prevents blurring when scaling */
             image-rendering: pixelated;
             image-rendering: crisp-edges;
         }
 
-        /* --- 2. Cloud Construction Logic --- */
-        /* How these are made:
-           The .cloud div is the flat base. 
-           The ::before and ::after pseudo-elements act as "stamps" 
-           placed on top to create the fluffy silhouettes.
-        */
+        /* --- 2. Cloud Construction --- */
         .cloud-layer {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -50,22 +44,13 @@
             background: inherit;
         }
 
-        /* Shape A: The Standard Bump */
         .shape-a::before { width: 20px; height: 20px; top: -10px; left: 10px; }
-
-        /* Shape B: The Double Bump */
         .shape-b::before { width: 15px; height: 15px; top: -8px; left: 5px; }
         .shape-b::after { width: 15px; height: 10px; top: -5px; left: 22px; }
-
-        /* Shape C: The Tall Fluff (Vertical volume) */
         .shape-c::before { width: 22px; height: 28px; top: -20px; left: 8px; }
-
-        /* Shape D: The Wispy Long Cloud (Horizontal stretch) */
         .shape-d { width: 65px; height: 8px; }
         .shape-d::before { width: 18px; height: 12px; top: -6px; left: 6px; }
         .shape-d::after { width: 22px; height: 10px; top: -4px; left: 35px; }
-
-        /* Shape E: The Wind-Blown (Asymmetric heap) */
         .shape-e::before { width: 28px; height: 18px; top: -10px; left: -5px; }
         .shape-e::after { width: 12px; height: 12px; top: -4px; left: 24px; }
 
@@ -83,16 +68,10 @@
         }
 
         #logo {
-            width: 128px; /* Set your base pixel size here */
+            width: 256px; /* Scaled up for the Kenney logo */
             height: auto;
             margin-bottom: 20px;
             image-rendering: pixelated;
-        }
-
-        #status {
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
         }
 
         #progress-container {
@@ -102,13 +81,26 @@
             border: 1px solid #ffffff6d;
             padding: 2px;
             border-radius: 4px;
+            position: relative;
+            overflow: hidden;
         }
 
         #progress-bar {
             width: 0%;
             height: 100%;
-            background: #478bbff1; /* Godot Blue */
+            background: #478bbff1;
             transition: width 0.1s;
+        }
+
+        /* Fallback animation if the file size is unknown */
+        .indeterminate #progress-bar {
+            width: 40% !important;
+            animation: bypass 1.5s infinite linear;
+        }
+
+        @keyframes bypass {
+            0% { margin-left: -40%; }
+            100% { margin-left: 100%; }
         }
 
         /* --- 4. The Game Canvas --- */
@@ -119,7 +111,7 @@
             width: 100vw;
             height: 100vh;
             z-index: 1;
-            visibility: hidden; /* Hide until fully loaded */
+            visibility: hidden;
             background: black;
         }
     </style>
@@ -129,10 +121,8 @@
     <div class="cloud-layer" id="clouds">
         <div class="cloud shape-a" style="top: 10%; opacity: 0.1; animation-duration: 80s; transform: scale(1);"></div>
         <div class="cloud shape-d" style="top: 35%; opacity: 0.1; animation-duration: 100s; animation-delay: -40s; transform: scale(1.2);"></div>
-        
         <div class="cloud shape-c" style="top: 55%; opacity: 0.2; animation-duration: 50s; animation-delay: -15s; transform: scale(2);"></div>
         <div class="cloud shape-e" style="top: 20%; opacity: 0.2; animation-duration: 65s; animation-delay: -30s; transform: scale(1.7);"></div>
-        
         <div class="cloud shape-b" style="top: 80%; opacity: 0.3; animation-duration: 35s; animation-delay: -10s; transform: scale(2.8);"></div>
         <div class="cloud shape-d" style="top: 65%; opacity: 0.25; animation-duration: 40s; transform: scale(3.5);"></div>
     </div>
@@ -152,28 +142,30 @@
             const ui = document.getElementById('ui-layer');
             const clouds = document.getElementById('clouds');
             const canvas = document.getElementById('canvas');
+            const progressContainer = document.getElementById('progress-container');
             const progressBar = document.getElementById('progress-bar');
-            const status = document.getElementById('status');
 
             engine.startGame({
                 onProgress: function (current, total) {
                     if (total > 0) {
+                        // Standard progress bar
+                        progressContainer.classList.remove('indeterminate');
                         const pc = (current / total) * 100;
                         progressBar.style.width = pc + '%';
-                        // Optional: show percentage text
-                        status.innerText = "LOADING " + Math.floor(pc) + "%";
+                    } else {
+                        // Total is 0 or unknown, trigger the sliding animation
+                        progressContainer.classList.add('indeterminate');
                     }
                 }
             }).then(() => {
-                // Success: Transition to game
                 ui.remove();
                 clouds.remove();
                 canvas.style.visibility = 'visible';
                 canvas.focus();
             }).catch((err) => {
-                status.innerText = "LOAD ERROR";
-                status.style.color = "#ff4444";
                 console.error(err);
+                // If it fails, at least try to show the error on the page
+                document.body.innerHTML += `<div style="z-index:10; color:red;">Load Error: ${err.message}</div>`;
             });
         })();
     </script>
