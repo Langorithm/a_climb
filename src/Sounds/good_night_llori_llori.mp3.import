@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/good_night_llori_llori.mp3-693ab7fa77baff109f
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
