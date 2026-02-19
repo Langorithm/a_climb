@@ -3,7 +3,7 @@ extends Area2D
 
 @export var knockback_strength: float = 400.0
 
-@onready var jump_sound: AudioStreamPlayer = %JumpSound
+@onready var hit_sound: AudioStreamPlayer2D = %HitSound
 
 
 func _ready() -> void:
@@ -12,5 +12,5 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.has_method('apply_knockback'):
-		jump_sound.play()
+		hit_sound.play()
 		body.apply_knockback(global_position, knockback_strength)
