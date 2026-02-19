@@ -1,10 +1,12 @@
 class_name Platform
 extends AnimatableBody2D
 
-@onready var path: Line2D = $Line2D
+var path: Line2D
+# @onready var path: Line2D = $Line2D
 
 
 func _ready() -> void:
+	path = find_child("Line2D")
 	if path:
 		path.visible = false
 		var tween = create_tween().set_trans(
