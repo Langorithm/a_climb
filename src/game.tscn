@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://btl8x4mylr2y6" path="res://camera_2d.gd" id="4_ryrav"]
 [ext_resource type="PackedScene" uid="uid://b56rx4e7g14tm" path="res://Map/hazard.tscn" id="6_eow3j"]
 [ext_resource type="AudioStream" uid="uid://c31lmqod6rfew" path="res://Sounds/win.wav" id="6_hve3p"]
+[ext_resource type="AudioStream" uid="uid://drrt1gcbb2scn" path="res://Sounds/good_night_llori_llori.mp3" id="11_mfdv2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7jktm"]
 font = ExtResource("2_fc0e3")
@@ -363,7 +364,7 @@ rotation = -0.0763785
 points = PackedVector2Array(-423.5868, -68.66803, -157.73792, -267.37753, -331.97778, -610.04584)
 
 [node name="Player" parent="." unique_id=1130158691 groups=["Player"] instance=ExtResource("2_feb5d")]
-position = Vector2(379, 832)
+position = Vector2(332, 874)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1464915663]
 position = Vector2(-1, -191)
@@ -400,5 +401,12 @@ position = Vector2(1846, -2778)
 
 [node name="Hazard13" parent="." unique_id=1649240312 instance=ExtResource("6_eow3j")]
 position = Vector2(738, -1913)
+
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=602740635]
+position = Vector2(1038, -3324)
+stream = ExtResource("11_mfdv2")
+autoplay = true
+max_distance = 4500.0
+attenuation = 2.143547
 
 [connection signal="player_damaged" from="Player" to="Player/Camera2D" method="_on_player_player_damaged"]
