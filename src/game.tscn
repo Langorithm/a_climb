@@ -23,11 +23,14 @@ shadow_offset = Vector2(0.5, 3)
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mwb40"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_feb5d"]
+radius = 20.024984
 
 [sub_resource type="Gradient" id="Gradient_ryrav"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_eow3j"]
 gradient = SubResource("Gradient_ryrav")
+fill = 2
 
 [node name="Node2D" type="Node2D" unique_id=1263993336]
 script = ExtResource("1_e2o6t")
@@ -134,37 +137,37 @@ debug_color = Color(0.6292076, 0.5305362, 0, 0.41960785)
 
 [node name="Sprite2D" type="Sprite2D" parent="WinArea" unique_id=2011005331]
 modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.49654782, 0.49654782)
 texture = SubResource("GradientTexture2D_eow3j")
 
 [node name="Sprite2D2" type="Sprite2D" parent="WinArea" unique_id=684232192]
 modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
 rotation = 0.26344597
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.49654782, 0.49654782)
 texture = SubResource("GradientTexture2D_eow3j")
 
 [node name="Sprite2D3" type="Sprite2D" parent="WinArea" unique_id=1691083331]
 modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
 rotation = 0.56885856
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.49654782, 0.49654782)
 texture = SubResource("GradientTexture2D_eow3j")
 
 [node name="Sprite2D4" type="Sprite2D" parent="WinArea" unique_id=1951199941]
 modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
 rotation = 0.8838998
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.49654782, 0.49654782)
 texture = SubResource("GradientTexture2D_eow3j")
 
 [node name="Sprite2D5" type="Sprite2D" parent="WinArea" unique_id=1160001771]
 modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
 rotation = 1.0843444
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.49654782, 0.49654782)
 texture = SubResource("GradientTexture2D_eow3j")
 
 [node name="Sprite2D6" type="Sprite2D" parent="WinArea" unique_id=1983380415]
 modulate = Color(1, 0.90000004, 0.39999998, 0.4745098)
 rotation = 1.3993856
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.49654782, 0.49654782)
 texture = SubResource("GradientTexture2D_eow3j")
 
 [node name="WinSound" type="AudioStreamPlayer" parent="WinArea" unique_id=897318905]
@@ -360,7 +363,7 @@ rotation = -0.0763785
 points = PackedVector2Array(-423.5868, -68.66803, -157.73792, -267.37753, -331.97778, -610.04584)
 
 [node name="Player" parent="." unique_id=1130158691 groups=["Player"] instance=ExtResource("2_feb5d")]
-position = Vector2(1708, -2725)
+position = Vector2(379, 832)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1464915663]
 position = Vector2(-1, -191)
@@ -375,7 +378,7 @@ script = ExtResource("4_ryrav")
 position = Vector2(1370, 354)
 
 [node name="Hazard2" parent="." unique_id=768037134 instance=ExtResource("6_eow3j")]
-position = Vector2(598, 1034)
+position = Vector2(552, 1025)
 
 [node name="Hazard8" parent="." unique_id=882163600 instance=ExtResource("6_eow3j")]
 position = Vector2(1123, 73)
