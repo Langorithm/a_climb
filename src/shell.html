@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$GODOT_PROJECT_NAME</title>
+    <style>
+        /* --- 1. Global Reset & Pixel Rendering --- */
+        body {
+            margin: 0;
+            background-color: #1a1a2e;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+            /* The "Secret Sauce" for Pixel Art: prevents blurring when scaling */
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        /* --- 2. Cloud Construction Logic --- */
+        /* How these are made:
+           The .cloud div is the flat base. 
+           The ::before and ::after pseudo-elements act as "stamps" 
+           placed on top to create the fluffy silhouettes.
+        */
+        .cloud-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .cloud {
+            position: absolute;
+            background: #ffffff;
+            width: 40px; 
+            height: 12px;
+            animation: move linear infinite;
+        }
+
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: inherit;
+        }
+
+        /* Shape A: The Standard Bump */
+        .shape-a::before { width: 20px; height: 20px; top: -10px; left: 10px; }
+
+        /* Shape B: The Double Bump */
+        .shape-b::before { width: 15px; height: 15px; top: -8px; left: 5px; }
+        .shape-b::after { width: 15px; height: 10px; top: -5px; left: 22px; }
+
+        /* Shape C: The Tall Fluff (Vertical volume) */
+        .shape-c::before { width: 22px; height: 28px; top: -20px; left: 8px; }
+
+        /* Shape D: The Wispy Long Cloud (Horizontal stretch) */
+        .shape-d { width: 65px; height: 8px; }
+        .shape-d::before { width: 18px; height: 12px; top: -6px; left: 6px; }
+        .shape-d::after { width: 22px; height: 10px; top: -4px; left: 35px; }
+
+        /* Shape E: The Wind-Blown (Asymmetric heap) */
+        .shape-e::before { width: 28px; height: 18px; top: -10px; left: -5px; }
+        .shape-e::after { width: 12px; height: 12px; top: -4px; left: 24px; }
+
+        @keyframes move {
+            from { left: -300px; }
+            to { left: 100vw; }
+        }
+
+        /* --- 3. UI & Branding --- */
+        #ui-layer {
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #logo {
+            width: 128px; /* Set your base pixel size here */
+            height: auto;
+            margin-bottom: 20px;
+            image-rendering: pixelated;
+        }
+
+        #status {
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        #progress-container {
+            width: 240px;
+            height: 12px;
+            background: #50334624;
+            border: 1px solid #ffffff6d;
+            padding: 2px;
+            border-radius: 4px;
+        }
+
+        #progress-bar {
+            width: 50%;
+            height: 100%;
+            background: #478bbff1; /* Godot Blue */
+            transition: width 0.1s;
+        }
+
+        /* --- 4. The Game Canvas --- */
+        #canvas {
+            display: block;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            visibility: hidden; /* Hide until fully loaded */
+            background: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cloud-layer" id="clouds">
+        <div class="cloud shape-a" style="top: 10%; opacity: 0.1; animation-duration: 80s; transform: scale(1);"></div>
+        <div class="cloud shape-d" style="top: 35%; opacity: 0.1; animation-duration: 100s; animation-delay: -40s; transform: scale(1.2);"></div>
+        
+        <div class="cloud shape-c" style="top: 55%; opacity: 0.2; animation-duration: 50s; animation-delay: -15s; transform: scale(2);"></div>
+        <div class="cloud shape-e" style="top: 20%; opacity: 0.2; animation-duration: 65s; animation-delay: -30s; transform: scale(1.7);"></div>
+        
+        <div class="cloud shape-b" style="top: 80%; opacity: 0.3; animation-duration: 35s; animation-delay: -10s; transform: scale(2.8);"></div>
+        <div class="cloud shape-d" style="top: 65%; opacity: 0.25; animation-duration: 40s; transform: scale(3.5);"></div>
+    </div>
+
+    <div id="ui-layer">
+        <img id="logo" src="https://raw.githubusercontent.com/KenneyNL/Godot-SplashScreens/refs/heads/main/Logo/Pixel/made-with-godot-light.png" alt="MADE WITH GODOT">
+        <div id="progress-container"><div id="progress-bar"></div></div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <script src="$GODOT_URL"></script>
+    <script>
+        const engine = new Engine($GODOT_CONFIG);
+
+        (function() {
+            const ui = document.getElementById('ui-layer');
+            const clouds = document.getElementById('clouds');
+            const canvas = document.getElementById('canvas');
+            const progressBar = document.getElementById('progress-bar');
+            const status = document.getElementById('status');
+
+            engine.startGame({
+                onProgress: function (current, total) {
+                    if (total > 0) {
+                        const pc = (current / total) * 100;
+                        progressBar.style.width = pc + '%';
+                        // Optional: show percentage text
+                        status.innerText = "LOADING " + Math.floor(pc) + "%";
+                    }
+                }
+            }).then(() => {
+                // Success: Transition to game
+                ui.remove();
+                clouds.remove();
+                canvas.style.visibility = 'visible';
+                canvas.focus();
+            }).catch((err) => {
+                status.innerText = "LOAD ERROR";
+                status.style.color = "#ff4444";
+                console.error(err);
+            });
+        })();
+    </script>
+</body>
+</html>
